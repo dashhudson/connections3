@@ -42,9 +42,19 @@ docker-compose stop | start | restart
 docker-compose exec connections flask db upgrade
 ```
 
-- Run tests
+- Run all tests
 ```
 docker-compose exec connections pytest
+```
+
+- Run specific tests by matching keywords
+```
+docker-compose exec connections pytest -k "update_connection"
+```
+
+- Run all tests without capturing stdout (won't swallow print statements)
+```
+docker-compose exec connections pytest -s
 ```
 
 - Lint code for style violations
