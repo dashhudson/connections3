@@ -6,6 +6,20 @@ from tests.factories import PersonFactory
 
 from connections.models.connection import Connection
 
+EXPECTED_FIELDS = [
+    'id',
+    'from_person',
+    'to_person',
+    'connection_type',
+]
+
+EXPECTED_PERSON_FIELDS = [
+    'id',
+    'first_name',
+    'last_name',
+    'email',
+]
+
 
 def test_can_create_connection(db, testapp):
     person_from = PersonFactory(first_name='Jim')
@@ -20,7 +34,11 @@ def test_can_create_connection(db, testapp):
 
     assert res.status_code == HTTPStatus.CREATED
 
-    assert 'id' in res.json
+    for field in EXPECTED_FIELDS:
+        assert field in res.json
+        if field in ['to_person', 'from_person']:
+            for p_field in EXPECTED_PERSON_FIELDS:
+                assert p_field in res.json[field]
 
     connection = Connection.query.get(res.json['id'])
 
