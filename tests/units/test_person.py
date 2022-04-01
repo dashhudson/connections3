@@ -15,10 +15,15 @@ def test_mutual_friends(db):
         ConnectionFactory(from_person=instance, to_person=f, connection_type='friend')
         ConnectionFactory(from_person=target, to_person=f, connection_type='friend')
 
-    # mutual connections, but not friends
+    # mutual connections, but not friends on both sides
     decoy = PersonFactory()
     ConnectionFactory(from_person=instance, to_person=decoy, connection_type='coworker')
-    ConnectionFactory(from_person=target, to_person=decoy, connection_type='coworker')
+    ConnectionFactory(from_person=target, to_person=decoy, connection_type='friend')
+
+    # same as above, but friend on other side
+    another_decoy = PersonFactory()
+    ConnectionFactory(from_person=instance, to_person=another_decoy, connection_type='friend')
+    ConnectionFactory(from_person=target, to_person=another_decoy, connection_type='coworker')
 
     db.session.commit()
 
