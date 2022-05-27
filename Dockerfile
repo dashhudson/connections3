@@ -8,12 +8,12 @@ RUN apk update \
     && apk add --virtual .python-deps py3-flask==1.0.2-r1	\
     && apk add --virtual .runtime-deps mariadb-connector-c-dev \
     && pip3 install --upgrade pip \
-    && pip3 install pipenv==2018.10.13
+    && pip3 install poetry~=1.1.4
 
-COPY Pipfile /app/Pipfile
-COPY Pipfile.lock /app/Pipfile.lock
+COPY pyproject.toml poetry.lock /app/
 
-RUN pipenv install --system --dev --deploy \
+RUN poetry config virtualenvs.create false  \
+    && poetry install \
     && apk del .build-deps \
     && rm -rf /var/cache/apk/*
 

@@ -8,8 +8,9 @@ A demo app showing a simple service using flask and some supporting packages
 
 ### Stack Information
 
+* python3.9+
 * python flask
-* pipenv (for package management rather than virtualenv capabilities)
+* poetry
 * mysql
 * nginx + gunicorn
 
