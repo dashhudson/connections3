@@ -35,7 +35,7 @@ services:
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - "5000:80"
+      - "5005:80"
     depends_on:
       - connections
 
@@ -45,12 +45,12 @@ services:
     env_file:
       - .local.env
     command: >
-      gunicorn -b 0.0.0.0:5000
+      gunicorn -b 0.0.0.0:5005
       --access-logfile -
       --reload
       connections:app
     expose:
-      - "5000"
+      - "5005"
     volumes:
       - ./:/app
     depends_on:
