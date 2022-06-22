@@ -13,7 +13,7 @@ A demo app showing a simple service using flask and some supporting packages
 * mysql
 * nginx + gunicorn
 
-**All API calls will go through nginx at http://localhost:5000. All the other services are handled within Docker's internal network and no other ports are exposed to the host machine.**
+**All API calls will go to http://localhost:5005. All the other services are handled within Docker's internal network and no other ports are exposed to the host machine.**
 
 ### Instructions
 
