@@ -41,6 +41,7 @@ services:
 
   connections:
     image: connections:dev
+    restart: always
     build: .
     env_file:
       - .local.env
