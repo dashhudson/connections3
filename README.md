@@ -8,10 +8,10 @@ A demo app showing a simple service using flask and some supporting packages
 
 ### Stack Information
 
-* python flask
+* Python / Flask
 * pipenv (for package management rather than virtualenv capabilities)
-* mysql
-* nginx + gunicorn
+* MySQL and SQLAlchemy
+* gunicorn
 
 **All API calls will go to http://localhost:5005. All the other services are handled within Docker's internal network and no other ports are exposed to the host machine.**
 

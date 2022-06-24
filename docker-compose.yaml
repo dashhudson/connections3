@@ -28,16 +28,8 @@ services:
       - mysql_data_test:/var/lib/mysql
     expose:
       - "3306"
-
-  nginx:
-    image: nginx:stable-alpine
-    container_name: nginx_connections
-    volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - "5005:80"
-    depends_on:
-      - connections
+      - "3306:3306"
 
   connections:
     image: connections:dev
