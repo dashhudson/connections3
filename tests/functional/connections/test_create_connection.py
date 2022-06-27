@@ -61,8 +61,6 @@ def test_create_connection_parent_and_child_validation(db, testapp):
     res = testapp.post('/connections', json=payload)
 
     assert res.status_code == HTTPStatus.BAD_REQUEST
-
-    assert res.status_code == HTTPStatus.BAD_REQUEST
     assert res.json['description'] == 'Input failed validation.'
     errors = res.json['errors']
     assert len(errors['_schema']) == 1
