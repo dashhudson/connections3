@@ -1,63 +1,63 @@
-# connections demo
+# Connections Demo
 
 A demo app showing a simple service using flask and some supporting packages
 
-### Requirements
+## Requirements
 
- * Docker CE >= 17.04
+ * [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Mac or Windows)
 
-### Stack Information
+## Stack Information
 
-* python flask
-* pipenv (for package management rather than virtualenv capabilities)
-* mysql
-* nginx + gunicorn
+* Python / Flask
+* MySQL and SQLAlchemy
+* Gunicorn
 
-**All API calls will go through nginx at http://localhost:5000. All the other services are handled within Docker's internal network and no other ports are exposed to the host machine.**
+## Getting Started
 
-### Instructions
+It is recommended that you run two terminal tabs/windows, one for running the services and the other for running tests.
 
-- Build and kick off all the services with docker-compose.
+### Building and Running
 
-```
-docker-compose up -d --build
-```
-
- You can omit -d if you want to run it in the foreground and dump all logs from all containers into your terminal. Alternatively you can use ```docker logs <container name> -f``` to tail logs from a specific container.
-
-You can use ```docker ps``` command to see the running containers. You should see 4 running containers. ** Don't forget to run the migrations provided in the next section.**
-
-The folders **connections/** and **/migrations** are mounted from the host to the container. Any changes made from the host will propagate to the container and vice versa.
-
-MySQL database creates its own volume that provides persistence in the case of rebuilding/restarting/stopping the containers. Those volumes are managed by Docker and not directly exposed to the developer.
-
-Other useful commands for stopping, starting and restarting the services.
+To build and run the services, run this:
 
 ```
-docker-compose stop | start | restart
+docker-compose up
 ```
 
-- Migrate the database
+The application will automatically restart with any changes you make to the source files. The API is available
+at http://localhost:5005 for you to test manually.
+
+Once the services are up, the database is empty. Run this to migrate the database:
+
 ```
 docker-compose exec connections flask db upgrade
 ```
 
-- Run all tests
+### Running Tests
+
+The following will run all tests. None should be failing as part of the submission.
+
 ```
 docker-compose exec connections pytest
 ```
 
-- Run specific tests by matching keywords
+Optionally, you can run a specific test by matching keywords
+
 ```
-docker-compose exec connections pytest -k "update_connection"
+docker-compose exec connections pytest -k test_create_person
 ```
 
-- Run all tests without capturing stdout (won't swallow print statements)
+Adding the `-s` option will run tests without swallowing print statements and may be useful for debugging:
+
 ```
 docker-compose exec connections pytest -s
 ```
 
-- Lint code for style violations
+### Cleaning up
+
+When you are complete, you can Control-C on the window running the services to stop them.
+This command will cleanup any volumes created (also allows starting fresh if something is not working):
+
 ```
-docker-compose exec connections flake8 .
+docker-compose down -v
 ```

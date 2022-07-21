@@ -28,29 +28,22 @@ services:
       - mysql_data_test:/var/lib/mysql
     expose:
       - "3306"
-
-  nginx:
-    image: nginx:stable-alpine
-    container_name: nginx_connections
-    volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - "5000:80"
-    depends_on:
-      - connections
+      - "3306:3306"
 
   connections:
     image: connections:dev
+    restart: always
     build: .
     env_file:
       - .local.env
     command: >
-      gunicorn -b 0.0.0.0:5000
+      gunicorn -b 0.0.0.0:5005
       --access-logfile -
       --reload
       connections:app
     expose:
-      - "5000"
+      - "5005"
     volumes:
       - ./:/app
     depends_on:
