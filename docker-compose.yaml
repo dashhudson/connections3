@@ -44,6 +44,8 @@ services:
       connections:app
     expose:
       - "5005"
+    ports:
+      - "5005:5005"
     volumes:
       - ./:/app
     depends_on:
